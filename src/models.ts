@@ -1,4 +1,11 @@
 export type ID = string | number
+
+export interface IConnected_ListOf<T> {
+    count?: number
+    data:T[]
+    
+}
+
 export interface IConnected_Account {
 
     name: string

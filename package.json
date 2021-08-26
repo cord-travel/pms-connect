@@ -6,7 +6,6 @@
   "scripts": {
     "build": "tsc",
     "test": "jest"
-    
   },
   "repository": {
     "type": "git",
