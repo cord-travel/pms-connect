@@ -4,6 +4,9 @@ import {
     IConnected_Account,
     IConnected_Hotel,
     IConnected_RoomType,
+    IConnected_RatePlan,
+    IConnected_RatePlanItem,
+    IConnected_Rate,
     IConnected_Room,
 } from './models'
 
@@ -11,7 +14,6 @@ import {
 export interface IBaseAdapter {
 
     getAuthorizeUrl?(params?: any): string
-
 
     // Get current authorized account details
     getAccount?(params?: any): Promise<IConnected_Account>
@@ -24,7 +26,22 @@ export interface IBaseAdapter {
     // Roomtype 
     getRoomsTypes(hotelId?: ID, params?: any): Promise<IConnected_ListOf<IConnected_RoomType>>
 
-    getToomTypeById(roomTypeId: ID): Promise<IConnected_RoomType>
+    getRoomTypeById(roomTypeId: ID): Promise<IConnected_RoomType>
+
+    // RatePlans 
+
+    /**
+     * List all rateplans 
+     * @param hotelId 
+     * @param params 
+     */
+    getRatePlansByHotelId(hotelId: ID, params?: any): Promise<IConnected_ListOf<IConnected_RatePlanItem>>
+    getRatePlanById(ratePlanId: ID, params?: any): Promise<IConnected_RatePlan>
+
+    getRatesByRatePlanId(ratePlanId: ID): Promise<IConnected_ListOf<IConnected_Rate>>
+
+    // getRatePlanDetails()
+
 
     // Room
     getRooms(hotelId?: ID, params?: any): Promise<IConnected_ListOf<IConnected_Room>>
