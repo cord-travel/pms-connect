@@ -1,34 +1,20 @@
+import {
+  ILocationAddress,
+  IMultiLanguageObject,
+  ISurchargeModel,
+  IConnected_MonetaryValue,
+  IConnected_DateRange,
+  IConnected_Period
+} from './shared.models'
 export type ID = string | number;
 export interface BasicObject {
   [key: string]: string | number | null;
 }
 
-export interface ILocationAddress {
-  address: string;
-  postal_code?: string;
-  city?: string;
-  country_code: string;
-}
-export interface IMultiLanguageObject {
-  en: string; // English
-  de?: string; // german
-  es?: string; // Spanish
-  nl?: string; // Dutch
-  fr?: string; // French
-}
 
-export interface IDateRange {
-  from: string | Date;
-  to: string | Date;
-}
 
-// Surcharge model
 
-export interface ISurchargeModel {
-  adults: number; //The total numbers of adults
-  type?: string; // ENUM: Absolute, Percent
-  value: number;
-}
+
 export interface IConnected_ListOf<T> {
   count?: number;
   data: T[];
@@ -76,21 +62,7 @@ export interface IConnected_Room {
 
 // RATE PLANS
 
-export interface IConnected_MonetaryValue {
-  amount: number;
-  currency: string;
-}
 
-export interface IConnected_DateRange {
-  from: string;
-  to: string;
-}
-
-export interface IConnected_Period {
-  hours: number;
-  days: number;
-  months: number;
-}
 
 export interface IConnected_Policy {
   id: ID;
@@ -141,7 +113,7 @@ export interface IConnected_RatePlanItem {
   description?: IMultiLanguageObject;
   is_bookable?: boolean;
   channel_codes: string[];
-  rates_range?: IDateRange;
+  rates_range?: IConnected_DateRange;
 }
 
 export interface IConnected_RatePlan {
@@ -152,8 +124,8 @@ export interface IConnected_RatePlan {
   channel_codes: string[];
   minimum_guarantee_type: string[];
   price_calculation_mode?: string[];
-  booking_periods?: IDateRange[];
-  rates_range?: IDateRange;
+  booking_periods?: IConnected_DateRange[];
+  rates_range?: IConnected_DateRange;
   promo_codes?: string[];
   is_bookable?: boolean;
   is_subject_to_city_tax?: boolean;
@@ -191,4 +163,13 @@ export interface IConnected_CalculatedRate {
   adults: number
   price: IConnected_MonetaryValue
   included_services_price?: IConnected_MonetaryValue
+}
+
+
+export interface IConnected_PromoCode {
+  id?: ID
+  code: string
+  related_rateplan_ids?: string[]
+  name?: IMultiLanguageObject
+  description?: IMultiLanguageObject
 }
