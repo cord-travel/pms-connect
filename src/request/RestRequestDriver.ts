@@ -42,7 +42,7 @@ export class RestRequestDriver extends BaseRequestDriver {
   }
 
   setHeaderToken() {
-    this._http = this.creareHttp()
+    this._http.defaults.headers['Authorization'] = `Bearer ${this.accessToken}`
   }
 
   async generteAccessToken() {
