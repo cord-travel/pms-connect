@@ -1,3 +1,3 @@
-export * from './BaseStore'
-export * from './InMemoryStore'
-export * from './store-utils'
+export * from './BaseStore';
+export * from './InMemoryStore';
+export * from './store-utils';

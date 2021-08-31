@@ -1,66 +1,54 @@
-import { IBaseTokenStore , createStore} from '.'
-import { RestRequestDriver } from '../request'
+import { IBaseTokenStore, createStore } from '.';
+import { RestRequestDriver } from '../request';
 
-test("Custom Token store  ", async () => {
-    let imaginaryDB:any = {at:"", rt:""}
+test('Custom Token store  ', async () => {
+  let imaginaryDB: any = { at: '', rt: '' };
 
+  // Request
 
-
-
-    // Request
-
-    let restClient = new RestRequestDriver({
-        refreshToken: "old rt",
-        baseUrl: "",
-        generteAccessToken: ()  => {
-            return { access_token: "new at", refresh_token: "new rt" }
-        
-        }
-    })
-
-    // Set custom token store
-
-    let customStore: IBaseTokenStore = {
-        setTokens: async (token) => {
-
-            imaginaryDB = { at: token.access_token, rt:token.refresh_token}
-            
-        }
-    
+  let restClient = new RestRequestDriver({
+    refreshToken: 'old rt',
+    baseUrl: '',
+    generteAccessToken: () => {
+      return { access_token: 'new at', refresh_token: 'new rt' };
     }
+  });
 
-    restClient.setTokenStore(customStore)
+  // Set custom token store
 
-    await restClient.generteAccessToken();
+  let customStore: IBaseTokenStore = {
+    setTokens: async (token) => {
+      imaginaryDB = { at: token.access_token, rt: token.refresh_token };
+    }
+  };
 
-    expect(imaginaryDB.at).toBe("new at")
-    
-})
+  restClient.setTokenStore(customStore);
 
-test("Custom store with creatStore utility function", async () => {
+  await restClient.generteAccessToken();
 
-    let xyzDB:any = {access_token:"", refresh_token:""}
+  expect(imaginaryDB.at).toBe('new at');
+});
 
-    // Request
+test('Custom store with creatStore utility function', async () => {
+  let xyzDB: any = { access_token: '', refresh_token: '' };
 
-    let restClient = new RestRequestDriver({
-        refreshToken: "xyz rt",
-        baseUrl: "",
-        generteAccessToken: ()  => {
-            return { access_token: "xyz at", refresh_token: "xyz rt" }
-        
-        }
-    })
+  // Request
 
-    let xyzTokenStore = createStore((tokens) => {
-        xyzDB = tokens
-    })
+  let restClient = new RestRequestDriver({
+    refreshToken: 'xyz rt',
+    baseUrl: '',
+    generteAccessToken: () => {
+      return { access_token: 'xyz at', refresh_token: 'xyz rt' };
+    }
+  });
 
+  let xyzTokenStore = createStore((tokens) => {
+    xyzDB = tokens;
+  });
 
-    restClient.setTokenStore(xyzTokenStore)
+  restClient.setTokenStore(xyzTokenStore);
 
-    await restClient.generteAccessToken();
+  await restClient.generteAccessToken();
 
-    expect(xyzDB.access_token).toBe("xyz at")
-
-})
+  expect(xyzDB.access_token).toBe('xyz at');
+});
