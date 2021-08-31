@@ -26,7 +26,7 @@ export interface IDateRange {
 
 export interface ISurchargeModel {
     adults: number; //The total numbers of adults
-    type?: string[] // ENUM: Absolute, Percent
+    type?: string // ENUM: Absolute, Percent
     value: number
 }
 export interface IConnected_ListOf<T> {
@@ -112,28 +112,28 @@ export interface IConnected_Policy {
 }
 export interface IConnected_CancelationPolicy extends IConnected_Policy {
 
-    period_prior_to_arrival: IConnected_DateRange
+    period_prior_to_arrival: IConnected_Period
 }
 
 export interface IConnected_TimeSliceDefinition {
     id: string
     name: string
     description: string
-    checkInTime: string
-    checkOutTime: string
+    check_in_time: string
+    check_out_time: string
 }
 
 export interface IConnected_BookingRestrictionsModel {
-    minAdvance: IConnected_Period
-    maxAdvance: IConnected_Period
-    lateBookingUntil: string // Time value
+    min_advance: IConnected_Period
+    max_advance: IConnected_Period
+    late_booking_until: string // Time value
 
 }
 
 export interface IConnected_PricingRuleModel {
 
     baseRatePlan?: IConnected_RatePlan
-    type: string[]
+    type: string
     value: number
 }
 
@@ -141,12 +141,12 @@ export interface IConnected_PricingRuleModel {
 export interface IApaleoRatePlanAgeCategory {
 
     id: string
-    surcharges: ISurchargeModel
+    surcharges: ISurchargeModel[]
 
 }
 
 export interface IConnected_RatePlanService {
-    serviceId: string
+    service_id: string
     gross_price: IConnected_MonetaryValue
     pricing_mode?: string
 

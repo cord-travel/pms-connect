@@ -38,9 +38,6 @@ export interface IBaseAdapter {
     getRatePlansByHotelId(hotelId: ID, params?: any): Promise<IConnected_ListOf<IConnected_RatePlanItem>>
     getRatePlanById(ratePlanId: ID, params?: any): Promise<IConnected_RatePlan>
 
-    getRatesByRatePlanId(ratePlanId: ID): Promise<IConnected_ListOf<IConnected_Rate>>
-
-    // getRatePlanDetails()
 
 
     // Room
