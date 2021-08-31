@@ -7,7 +7,7 @@ import {
     IConnected_RatePlan,
     IConnected_RatePlanItem,
     IConnected_Rate,
-    IConnected_Room
+    IConnected_PromoCode
 } from './models';
 
 export interface IBaseAdapter {
@@ -81,11 +81,10 @@ export interface IBaseAdapter {
      */
     getRatesByRatePlan(ratePlan: IConnected_RatePlan | IConnected_RatePlanItem): Promise<IConnected_ListOf<IConnected_Rate>>
 
-    // Room
-    getRooms(
-        hotelId?: ID,
-        params?: any
-    ): Promise<IConnected_ListOf<IConnected_Room>>;
 
-    getRoomById(roomId: ID, params?: any): Promise<IConnected_Room>;
+
+    // Promo Codes
+    getPromoCodes(hotelId: ID, params?: any): Promise<IConnected_ListOf<IConnected_PromoCode>>
+
+
 }
