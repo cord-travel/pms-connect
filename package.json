@@ -1,8 +1,9 @@
 {
   "name": "@cord-travel/pms-connect",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.2",
   "description": "",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "jest",
@@ -13,7 +14,7 @@
     "url": "git+https://github.com/cord-travel/pms-connect.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Sarath TK <sarath.tk@cordiant.com> (http://github.com/saratonite)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/cord-travel/pms-connect/issues"
@@ -28,7 +29,7 @@
     "typescript": "^4.3.5"
   },
   "files": [
-    "./dist"
+    "dist/**"
   ],
   "dependencies": {
     "axios": "^0.21.1"
