@@ -83,6 +83,9 @@ export interface IBaseAdapter {
 
 
 
+    // Cancelation policies
+
+
     // Promo Codes
     getPromoCodes(hotelId: ID, params?: any): Promise<IConnected_ListOf<IConnected_PromoCode>>
 

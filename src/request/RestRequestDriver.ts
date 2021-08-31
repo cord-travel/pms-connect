@@ -23,13 +23,18 @@ export class RestRequestDriver extends BaseRequestDriver {
     super(options);
     this.options = { ...this.defaultOptions, ...options };
 
-    this._http = axios.create({
+    this._http = this.creareHttp()
+
+    this.initiateErrorHander();
+  }
+
+
+  creareHttp(): AxiosInstance {
+    return axios.create({
       baseURL: this.baseUrl,
       timeout: 10000,
       headers: { Authorization: `Bearer ${this.accessToken}` }
     });
-
-    this.initiateErrorHander();
   }
 
   public get http(): AxiosInstance {
@@ -37,9 +42,7 @@ export class RestRequestDriver extends BaseRequestDriver {
   }
 
   setHeaderToken() {
-    this._http.defaults.headers.common[
-      'Authorization'
-    ] = `Bearer ${this.accessToken}`;
+    this._http = this.creareHttp()
   }
 
   async generteAccessToken() {
@@ -47,6 +50,7 @@ export class RestRequestDriver extends BaseRequestDriver {
       const tokens = await this.options.generteAccessToken(this.refreshToken);
 
       await this.saveTokens(tokens);
+      this.setHeaderToken();
       return tokens;
     }
 
@@ -78,7 +82,7 @@ export class RestRequestDriver extends BaseRequestDriver {
             'Authorization'
           ] = `Bearer ${this.accessToken}`;
 
-          this.setHeaderToken();
+
 
           return this._http(originalRequest);
         } catch (e) {
