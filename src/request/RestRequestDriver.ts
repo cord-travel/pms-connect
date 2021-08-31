@@ -1,119 +1,90 @@
-import axios, { AxiosInstance, AxiosError } from 'axios'
-import { ITokenValue, IGeneratedTokens } from '../index'
-import { BaseRequestDriver,IBaseRequestDriver,  IRequestDriverOptions,  } from './BaseRequetDriver'
-export interface IRequestDriverRest extends IBaseRequestDriver{
-    http: AxiosInstance
-   
+import axios, { AxiosInstance, AxiosError } from 'axios';
+import { ITokenValue, IGeneratedTokens } from '../index';
+import {
+  BaseRequestDriver,
+  IBaseRequestDriver,
+  IRequestDriverOptions
+} from './BaseRequetDriver';
+export interface IRequestDriverRest extends IBaseRequestDriver {
+  http: AxiosInstance;
 }
 
-export class RestRequestDriver  extends BaseRequestDriver {
+export class RestRequestDriver extends BaseRequestDriver {
+  private _http: AxiosInstance;
+  private token;
 
-    private _http: AxiosInstance;
-    private  token
-    
+  private defaultOptions: IRequestDriverOptions = {
+    refreshToken: null,
+    accessToken: null,
+    baseUrl: '/'
+  };
 
+  constructor(options: IRequestDriverOptions) {
+    super(options);
+    this.options = { ...this.defaultOptions, ...options };
 
-    private defaultOptions: IRequestDriverOptions = {
-        refreshToken: null,
-        accessToken: null,
-        baseUrl: "/",
-       
-    
+    this._http = axios.create({
+      baseURL: this.baseUrl,
+      timeout: 10000,
+      headers: { Authorization: `Bearer ${this.accessToken}` }
+    });
+
+    this.initiateErrorHander();
+  }
+
+  public get http(): AxiosInstance {
+    return this._http;
+  }
+
+  setHeaderToken() {
+    this._http.defaults.headers.common[
+      'Authorization'
+    ] = `Bearer ${this.accessToken}`;
+  }
+
+  async generteAccessToken() {
+    if (this.options.generteAccessToken) {
+      const tokens = await this.options.generteAccessToken(this.refreshToken);
+
+      await this.saveTokens(tokens);
+      return tokens;
     }
 
- 
-    constructor(options: IRequestDriverOptions) {
-        super(options)
-        this.options = { ...this.defaultOptions, ...options }
+    throw new Error(`RestRequestDriver : no generteAccessToken function`);
+  }
 
-    
-        
-        this._http = axios.create({
-            baseURL: this.baseUrl,
-            timeout:10000,
-            headers: {'Authorization': `Bearer ${this.accessToken}`}
-        })
-
-        this.initiateErrorHander();
-    }
- 
- 
-
-
-    public get http(): AxiosInstance {
-        
-        return this._http
-    }
-
-    setHeaderToken() {
-        this._http.defaults.headers.common["Authorization"] = `Bearer ${this.accessToken}`
-    }
-
-
-
-    async generteAccessToken() {
-
-        if (this.options.generteAccessToken) {
-
-            const tokens = await this.options.generteAccessToken(this.refreshToken)
-
-            await this.saveTokens(tokens)
-            return  tokens
+  initiateErrorHander() {
+    this._http.interceptors.response.use(
+      (response) => response,
+      async (error: AxiosError) => {
+        if (error && !error.response) {
+          throw error;
+        }
+        if (error.response && error.response.status !== 401) {
+          throw error;
         }
 
-        
+        // If error 401 then create new access token and retry the previous request
 
-        throw new Error(`RestRequestDriver : no generteAccessToken function`)
-        
-    }
+        let originalRequest = error.config;
+        try {
+          const data = await this.generteAccessToken();
 
+          if (!data) {
+            return Promise.reject('Cant create refresh token');
+          }
 
-    initiateErrorHander() {
-        
-        this._http.interceptors.response.use((response) => response, async (error: AxiosError) => {
+          originalRequest.headers[
+            'Authorization'
+          ] = `Bearer ${this.accessToken}`;
 
-            if (error && !error.response) {
-                
-                 throw error
-            }
-            if (error.response && error.response.status !== 401) {  
-                
-                throw error
-            }
+          this.setHeaderToken();
 
-            // If error 401 then create new access token and retry the previous request
-
-           let originalRequest = error.config
-            try {
-
-                const data = await this.generteAccessToken()
-    
-                if (!data) {
-                    
-                    return Promise.reject('Cant create refresh token')
-                }
-
-       
-               
-
-                
-
-
-                originalRequest.headers['Authorization'] = `Bearer ${this.accessToken}`
-
-                this.setHeaderToken()
-
-
-                return this._http(originalRequest)
-            }
-
-            catch (e) {
-                
-                return Promise.reject(e)
-            }            
-        })
-    }
-
-
-
+          return this._http(originalRequest);
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      }
+    );
+  }
 }
