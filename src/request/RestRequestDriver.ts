@@ -1,5 +1,4 @@
 import axios, { AxiosInstance, AxiosError } from 'axios';
-import { ITokenValue, IGeneratedTokens } from '../index';
 import {
   BaseRequestDriver,
   IBaseRequestDriver,
@@ -11,7 +10,6 @@ export interface IRequestDriverRest extends IBaseRequestDriver {
 
 export class RestRequestDriver extends BaseRequestDriver {
   private _http: AxiosInstance;
-  private token;
 
   private defaultOptions: IRequestDriverOptions = {
     refreshToken: null,

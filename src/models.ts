@@ -70,8 +70,8 @@ export interface IConnected_Policy {
   name: IMultiLanguageObject;
   description: IMultiLanguageObject;
 }
-export interface IConnected_CancelationPolicy extends IConnected_Policy {
-  period_prior_to_arrival: IConnected_Period;
+export interface IConnected_EmbededCancelationPolicy extends IConnected_Policy {
+
 }
 
 export interface IConnected_TimeSliceDefinition {
@@ -130,7 +130,7 @@ export interface IConnected_RatePlan {
   is_bookable?: boolean;
   is_subject_to_city_tax?: boolean;
   surcharges?: ISurchargeModel[];
-  cancellation_policy: IConnected_CancelationPolicy;
+  cancellation_policy: IConnected_EmbededCancelationPolicy;
   no_show_policy: IConnected_Policy;
   time_slice_definition: IConnected_TimeSliceDefinition;
   restrictions: IConnected_BookingRestrictionsModel;
@@ -172,4 +172,45 @@ export interface IConnected_PromoCode {
   related_rateplan_ids?: string[]
   name?: IMultiLanguageObject
   description?: IMultiLanguageObject
+}
+
+// Cancelation Policies
+
+export interface IConnected_CancellationPolicy {
+  id: ID
+  code: ID
+  hotel_id: ID
+  name: IMultiLanguageObject
+  description: IMultiLanguageObject
+  period_from_reference: IConnected_Period
+  reference?: string
+  fee?: IConnected_FeeDetailsModel
+
+}
+
+
+
+interface IConnected_FeeDetailsModel {
+
+  vat_type?: string
+  fixed_value?: IConnected_MonetaryValue
+  percent_value?: IConnected_PercentValueModel
+
+}
+
+
+interface IConnected_PercentValueModel {
+  percent: number
+  limit?: number
+  include_service_ids?: string[]
+}
+
+// No show policy
+export interface IConnected_NoShowPolicy {
+  id: string
+  hotel_id: ID
+  code: string
+  name: IMultiLanguageObject
+  description: IMultiLanguageObject
+  fee: IConnected_FeeDetailsModel
 }

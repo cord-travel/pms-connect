@@ -1,11 +1,11 @@
 {
   "name": "@cord-travel/pms-connect",
-  "version": "1.0.0-beta.2.1",
+  "version": "1.0.0-beta.2.2",
   "description": "",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf ./dist && tsc",
     "test": "jest",
     "format": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },

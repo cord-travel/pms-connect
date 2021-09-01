@@ -7,6 +7,8 @@ import {
     IConnected_RatePlan,
     IConnected_RatePlanItem,
     IConnected_Rate,
+    IConnected_CancellationPolicy,
+    IConnected_NoShowPolicy,
     IConnected_PromoCode
 } from './models';
 
@@ -85,7 +87,13 @@ export interface IBaseAdapter {
 
     // Cancelation policies
 
+    getCancellationPolicies(propertyId: ID, params: any): Promise<IConnected_ListOf<IConnected_CancellationPolicy>>
+    getCancellationPolicyById(cancellationPolicyId: ID, params: any): Promise<IConnected_CancellationPolicy>
 
+    // Connected No show policy
+
+    getNoShowPolicies(propertyId: ID, params: any): Promise<IConnected_ListOf<IConnected_NoShowPolicy>>
+    getNoShowPolicyById(noShowPolicyId: ID): Promise<IConnected_NoShowPolicy>
     // Promo Codes
     getPromoCodes(hotelId: ID, params?: any): Promise<IConnected_ListOf<IConnected_PromoCode>>
 
