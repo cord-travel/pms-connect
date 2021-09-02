@@ -5,15 +5,11 @@ import {
   IConnected_MonetaryValue,
   IConnected_DateRange,
   IConnected_Period
-} from './shared.models'
+} from './shared.models';
 export type ID = string | number;
 export interface BasicObject {
   [key: string]: string | number | null;
 }
-
-
-
-
 
 export interface IConnected_ListOf<T> {
   count?: number;
@@ -62,17 +58,14 @@ export interface IConnected_Room {
 
 // RATE PLANS
 
-
-
 export interface IConnected_Policy {
   id: ID;
   code?: string;
   name: IMultiLanguageObject;
   description: IMultiLanguageObject;
 }
-export interface IConnected_EmbededCancelationPolicy extends IConnected_Policy {
-
-}
+export interface IConnected_EmbededCancelationPolicy
+  extends IConnected_Policy {}
 
 export interface IConnected_TimeSliceDefinition {
   id: string;
@@ -114,6 +107,8 @@ export interface IConnected_RatePlanItem {
   is_bookable?: boolean;
   channel_codes: string[];
   rates_range?: IConnected_DateRange;
+  minimum_guarantee_type: string[];
+  promo_codes: string[];
 }
 
 export interface IConnected_RatePlan {
@@ -141,76 +136,92 @@ export interface IConnected_RatePlan {
 
 //
 
-
 export interface IConnected_Rate {
-  from: string
-  to: string
-  price?: IConnected_MonetaryValue
-  included_services_price?: IConnected_MonetaryValue
-  restrictions?: IConnected_RateRestriction
-  calculated_prices?: IConnected_CalculatedRate[]
+  from: string;
+  to: string;
+  price?: IConnected_MonetaryValue;
+  included_services_price?: IConnected_MonetaryValue;
+  restrictions?: IConnected_RateRestriction;
+  calculated_prices?: IConnected_CalculatedRate[];
 }
 
 export interface IConnected_RateRestriction {
-  closed: boolean
-  closed_on_arrival: boolean
-  closed_on_departure: boolean
-  min_length_of_stay?: number
-  max_length_of_stay?: number
+  closed: boolean;
+  closed_on_arrival: boolean;
+  closed_on_departure: boolean;
+  min_length_of_stay?: number;
+  max_length_of_stay?: number;
 }
 
 export interface IConnected_CalculatedRate {
-  adults: number
-  price: IConnected_MonetaryValue
-  included_services_price?: IConnected_MonetaryValue
+  adults: number;
+  price: IConnected_MonetaryValue;
+  included_services_price?: IConnected_MonetaryValue;
 }
 
-
 export interface IConnected_PromoCode {
-  id?: ID
-  code: string
-  related_rateplan_ids?: string[]
-  name?: IMultiLanguageObject
-  description?: IMultiLanguageObject
+  id?: ID;
+  code?: string;
+  related_rateplan_ids?: string[];
+  name?: IMultiLanguageObject;
+  description?: IMultiLanguageObject;
 }
 
 // Cancelation Policies
 
 export interface IConnected_CancellationPolicy {
-  id: ID
-  code: ID
-  hotel_id: ID
-  name: IMultiLanguageObject
-  description: IMultiLanguageObject
-  period_from_reference: IConnected_Period
-  reference?: string
-  fee?: IConnected_FeeDetailsModel
-
+  id: ID;
+  code?: ID;
+  hotel_id: ID;
+  name: IMultiLanguageObject;
+  description: IMultiLanguageObject;
+  period_from_reference: IConnected_Period;
+  reference?: string;
+  fee?: IConnected_FeeDetailsModel;
 }
-
-
 
 interface IConnected_FeeDetailsModel {
-
-  vat_type?: string
-  fixed_value?: IConnected_MonetaryValue
-  percent_value?: IConnected_PercentValueModel
-
+  vat_type?: string;
+  fixed_value?: IConnected_MonetaryValue;
+  percent_value?: IConnected_PercentValueModel;
 }
 
-
 interface IConnected_PercentValueModel {
-  percent: number
-  limit?: number
-  include_service_ids?: string[]
+  percent: number;
+  limit?: number;
+  include_service_ids?: string[];
 }
 
 // No show policy
 export interface IConnected_NoShowPolicy {
-  id: string
-  hotel_id: ID
-  code: string
-  name: IMultiLanguageObject
-  description: IMultiLanguageObject
-  fee: IConnected_FeeDetailsModel
+  id: string;
+  hotel_id: ID;
+  code?: string;
+  name: IMultiLanguageObject;
+  description: IMultiLanguageObject;
+  fee: IConnected_FeeDetailsModel;
+}
+
+// Age Category
+
+export interface IConnected_AgeCategory {
+  id: ID;
+  code?: ID;
+  hotel_id: ID;
+  min_age: number;
+  max_age: number;
+  name: IMultiLanguageObject;
+}
+
+// Service
+export interface IConnected_Service {
+  id: ID;
+  code: ID;
+  name: IMultiLanguageObject;
+  description: IMultiLanguageObject;
+  default_gross_price: IConnected_MonetaryValue;
+  pricing_unit?: string; // ["Person","Room"]
+  availability_mode?: string; // [ Arrival, Departure, Daily ]
+  channel_codes: string[]; // The channel codes the service is sold through
+  service_type?: string; // Other, Accommodation, FoodAndBeverages
 }
