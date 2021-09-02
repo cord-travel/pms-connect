@@ -1,101 +1,168 @@
 import {
-    ID,
-    IConnected_ListOf,
-    IConnected_Account,
-    IConnected_Hotel,
-    IConnected_RoomType,
-    IConnected_RatePlan,
-    IConnected_RatePlanItem,
-    IConnected_Rate,
-    IConnected_CancellationPolicy,
-    IConnected_NoShowPolicy,
-    IConnected_PromoCode
+  ID,
+  IConnected_ListOf,
+  IConnected_Account,
+  IConnected_Hotel,
+  IConnected_RoomType,
+  IConnected_RatePlan,
+  IConnected_RatePlanItem,
+  IConnected_Rate,
+  IConnected_CancellationPolicy,
+  IConnected_NoShowPolicy,
+  IConnected_AgeCategory,
+  IConnected_Service,
+  IConnected_PromoCode
 } from './models';
 
 export interface IBaseAdapter {
-    getAuthorizeUrl?(params?: any): string;
+  getAuthorizeUrl?(params?: any): string;
 
-    /**
-     * Get current authorized account details
-     * @param params 
-     */
-    getAccount?(params?: any): Promise<IConnected_Account>;
+  /**
+   * Get current authorized account details
+   * @param params
+   */
+  getAccount?(params?: any): Promise<IConnected_Account>;
 
-    /**
-     * Get list of hotels
-     * @param params 
-     */
-    getHotels(params?: any): Promise<IConnected_ListOf<IConnected_Hotel>>;
+  /**
+   * Get list of hotels
+   * @param params
+   */
+  getHotels(params?: any): Promise<IConnected_ListOf<IConnected_Hotel>>;
 
+  /**
+   * Get hotel details by id
+   * @param id
+   * @param params
+   */
 
-    /**
-     * Get hotel details by id
-     * @param id 
-     * @param params 
-     */
+  getHotelById(id: ID, params?: any): Promise<IConnected_Hotel>;
 
-    getHotelById(id: ID, params?: any): Promise<IConnected_Hotel>;
+  /**
+   * Get list of room types
+   * @param hotelId
+   * @param params
+   */
+  getRoomsTypes(
+    hotelId?: ID,
+    params?: any
+  ): Promise<IConnected_ListOf<IConnected_RoomType>>;
 
+  /**
+   * Get Roomtype details by id
+   * @param roomTypeId
+   * @param params
+   */
+  getRoomTypeById(roomTypeId: ID, params?: any): Promise<IConnected_RoomType>;
 
-    /**
-     * Get list of room types
-     * @param hotelId 
-     * @param params 
-     */
-    getRoomsTypes(
-        hotelId?: ID,
-        params?: any
-    ): Promise<IConnected_ListOf<IConnected_RoomType>>;
+  // RatePlans
 
+  /**
+   * List all RatePlans by hotel id
+   * @param hotelId
+   * @param params
+   */
+  getRatePlansByHotelId(
+    hotelId: ID,
+    params?: any
+  ): Promise<IConnected_ListOf<IConnected_RatePlan>>;
 
-    /**
-     * Get Roomtype details by id
-     * @param roomTypeId 
-     * @param params 
-     */
-    getRoomTypeById(roomTypeId: ID, params?: any): Promise<IConnected_RoomType>;
+  /**
+   * Get single RatePlan by id
+   * @param ratePlanId
+   * @param params
+   */
+  getRatePlanById(ratePlanId: ID, params?: any): Promise<IConnected_RatePlan>;
 
-    // RatePlans
+  /**
+   * Get list of rates by rateplan
+   * @param ratePlan
+   */
+  getRatesByRatePlan(
+    ratePlan: IConnected_RatePlan | IConnected_RatePlanItem
+  ): Promise<IConnected_ListOf<IConnected_Rate>>;
 
-    /**
-     * List all RatePlans by hotel id
-     * @param hotelId
-     * @param params
-     */
-    getRatePlansByHotelId(
-        hotelId: ID,
-        params?: any
-    ): Promise<IConnected_ListOf<IConnected_RatePlanItem>>;
+  // Cancelation policies
+  /**
+   * Get Cancellation policy list
+   * @param propertyId
+   * @param params
+   */
+  getCancellationPolicies(
+    propertyId: ID,
+    params?: any
+  ): Promise<IConnected_ListOf<IConnected_CancellationPolicy>>;
 
+  /**
+   * Get cancellation policy by id
+   * @param cancellationPolicyId
+   * @param params
+   */
+  getCancellationPolicyById(
+    cancellationPolicyId: ID,
+    params?: any
+  ): Promise<IConnected_CancellationPolicy>;
 
-    /**
-     * Get single RatePlan by id
-     * @param ratePlanId 
-     * @param params 
-     */
-    getRatePlanById(ratePlanId: ID, params?: any): Promise<IConnected_RatePlan>;
+  // Connected No show policy
+  /**
+   * Get No show policy list
+   * @param propertyId
+   * @param params
+   */
 
+  getNoShowPolicies(
+    propertyId: ID,
+    params?: any
+  ): Promise<IConnected_ListOf<IConnected_NoShowPolicy>>;
 
+  /**
+   * Get no show policy by id
+   * @param noShowPolicyId
+   * @param params
+   */
+  getNoShowPolicyById(
+    noShowPolicyId: ID,
+    params?: any
+  ): Promise<IConnected_NoShowPolicy>;
 
-    /**
-     * Get list of rates by rateplan
-     * @param ratePlan 
-     */
-    getRatesByRatePlan(ratePlan: IConnected_RatePlan | IConnected_RatePlanItem): Promise<IConnected_ListOf<IConnected_Rate>>
+  // Age category
 
+  /**
+   * Get age category list
+   * @param propertyId
+   * @param params
+   */
+  getAgeCategories(
+    propertyId: ID,
+    params?: any
+  ): Promise<IConnected_ListOf<IConnected_AgeCategory>>;
 
+  /**
+   * Get age category by id
+   * @param ageCategoryId
+   * @param params
+   */
+  getAgeCategoryById(
+    ageCategoryId: ID,
+    params?: any
+  ): Promise<IConnected_AgeCategory>;
 
-    // Cancelation policies
+  // Services
 
-    getCancellationPolicies(propertyId: ID, params: any): Promise<IConnected_ListOf<IConnected_CancellationPolicy>>
-    getCancellationPolicyById(cancellationPolicyId: ID, params: any): Promise<IConnected_CancellationPolicy>
+  getServices(
+    hotelId: ID,
+    params?: any
+  ): Promise<IConnected_ListOf<IConnected_Service>>;
 
-    // Connected No show policy
+  getServiceById(serviceId: ID, params?: any): Promise<IConnected_Service>;
 
-    getNoShowPolicies(propertyId: ID, params: any): Promise<IConnected_ListOf<IConnected_NoShowPolicy>>
-    getNoShowPolicyById(noShowPolicyId: ID): Promise<IConnected_NoShowPolicy>
-    // Promo Codes
-    getPromoCodes(hotelId: ID, params?: any): Promise<IConnected_ListOf<IConnected_PromoCode>>
-
-
+  // Promo Codes
+  /**
+   * List promo codes
+   * @param hotelId
+   * @param params
+   */
+  getPromoCodes(
+    hotelId: ID,
+    params?: any
+  ): Promise<IConnected_ListOf<IConnected_PromoCode>>;
 }
