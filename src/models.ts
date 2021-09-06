@@ -1,3 +1,4 @@
+export * from './webhooks.model'
 import {
   ILocationAddress,
   IMultiLanguageObject,
@@ -281,3 +282,5 @@ export interface IConnected_BlockValues {
   picked: number
   remaining: number
 }
+
+
