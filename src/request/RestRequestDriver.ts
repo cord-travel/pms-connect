@@ -8,7 +8,7 @@ export interface IRequestDriverRest extends IBaseRequestDriver {
   http: AxiosInstance;
 }
 
-export class RestRequestDriver extends BaseRequestDriver {
+export class RestRequestDriver extends BaseRequestDriver implements IRequestDriverRest {
   private _http: AxiosInstance;
 
   private defaultOptions: IRequestDriverOptions = {
@@ -37,6 +37,8 @@ export class RestRequestDriver extends BaseRequestDriver {
   public get http(): AxiosInstance {
     return this._http;
   }
+
+
 
   setHeaderToken() {
     this._http.defaults.headers['Authorization'] = `Bearer ${this.accessToken}`;

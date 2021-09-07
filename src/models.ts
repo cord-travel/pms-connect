@@ -1,3 +1,4 @@
+export * from './webhooks.model'
 import {
   ILocationAddress,
   IMultiLanguageObject,
@@ -65,7 +66,7 @@ export interface IConnected_Policy {
   description: IMultiLanguageObject;
 }
 export interface IConnected_EmbededCancelationPolicy
-  extends IConnected_Policy {}
+  extends IConnected_Policy { }
 
 export interface IConnected_TimeSliceDefinition {
   id: string;
@@ -139,10 +140,10 @@ export interface IConnected_RatePlan {
 export interface IConnected_Rate {
   from: string;
   to: string;
-  price?: IConnected_MonetaryValue;
+  price: IConnected_MonetaryValue;
+  calculated_prices: IConnected_CalculatedRate[];
   included_services_price?: IConnected_MonetaryValue;
   restrictions?: IConnected_RateRestriction;
-  calculated_prices?: IConnected_CalculatedRate[];
 }
 
 export interface IConnected_RateRestriction {
@@ -225,3 +226,61 @@ export interface IConnected_Service {
   channel_codes: string[]; // The channel codes the service is sold through
   service_type?: string; // Other, Accommodation, FoodAndBeverages
 }
+
+
+// Availability
+
+export interface IConnected_RoomType_AvailabilityResponse {
+
+  time_slices: IConnected_RoomType_AvailabilityTimeSlice[]
+}
+
+export interface IConnected_RoomType_AvailabilityTimeSlice {
+
+  from: string
+  to: string
+  total: IConnected_AvailabilityValues
+  room_types: IConnected_AvailabilityRoomTypeValues[]
+}
+
+export interface IConnected_AvailabilityRoomTypeValues extends IConnected_AvailabilityValues {
+
+  room_type: IConnected_EmbedAvailableRoomType
+
+}
+
+
+// Roomtype alias
+interface IConnected_EmbedAvailableRoomType {
+  id: ID
+  code: ID
+  name?: IMultiLanguageObject
+  description?: IMultiLanguageObject
+
+}
+export interface IConnected_AvailabilityValues {
+  physical_count: number
+  house_count: number
+  sold_count?: number
+  occupancy?: number
+  sellable_count?: number
+  allowed_overbooking_count?: number
+  maintenance?: IConnected_MaintenanceValues
+  block?: IConnected_BlockValues
+}
+
+export interface IConnected_MaintenanceValues {
+  out_of_service: number,
+  out_of_order?: number,
+  out_of_inventory?: number
+
+}
+
+export interface IConnected_BlockValues {
+  definite: number
+  tentative: number
+  picked: number
+  remaining: number
+}
+
+

@@ -11,10 +11,15 @@ import {
   IConnected_NoShowPolicy,
   IConnected_AgeCategory,
   IConnected_Service,
-  IConnected_PromoCode
+  IConnected_PromoCode,
+  IConnected_RoomType_AvailabilityResponse,
+  IConnected_WebHookDefinition
 } from './models';
 
+import { IConnected_DateRange } from './shared.models'
+
 export interface IBaseAdapter {
+  name: string
   getAuthorizeUrl?(params?: any): string;
 
   /**
@@ -165,4 +170,17 @@ export interface IBaseAdapter {
     hotelId: ID,
     params?: any
   ): Promise<IConnected_ListOf<IConnected_PromoCode>>;
+
+
+  // Availability 
+  getAvaialability(hotel_id: ID, dateRange: IConnected_DateRange): Promise<IConnected_RoomType_AvailabilityResponse>
+
+
+  //TODO: Web hooks related methods (create, update, delete, list, webhooks)
+
+  webhooksList(): Promise<IConnected_WebHookDefinition[]> | void
+  webhooksCreate(webhookDefinition: IConnected_WebHookDefinition): Promise<ID> | void
+  webhooksUpdate(id: ID, webhookDefinition: IConnected_WebHookDefinition): Promise<ID> | void
+  webhooksDelete(webHookId: ID): Promise<any> | void
+
 }
