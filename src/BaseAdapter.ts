@@ -178,9 +178,10 @@ export interface IBaseAdapter {
 
   //TODO: Web hooks related methods (create, update, delete, list, webhooks)
 
-  webhooksList(): Promise<IConnected_WebHookDefinition[]> | void
-  webhooksCreate(webhookDefinition: IConnected_WebHookDefinition): Promise<ID> | void
-  webhooksUpdate(id: ID, webhookDefinition: IConnected_WebHookDefinition): Promise<ID> | void
-  webhooksDelete(webHookId: ID): Promise<any> | void
+  webhooksList(): Promise<IConnected_WebHookDefinition[]> | IConnected_WebHookDefinition[]
+  webhooksGetById(id: ID): Promise<IConnected_WebHookDefinition> | IConnected_WebHookDefinition
+  webhooksCreate(webhookDefinition: IConnected_WebHookDefinition): Promise<ID> | ID
+  webhooksUpdate(id: ID, webhookDefinition: IConnected_WebHookDefinition): Promise<ID> | ID
+  webhooksDelete(webHookId: ID): Promise<ID> | ID
 
 }
