@@ -13,7 +13,10 @@ import {
   IConnected_Service,
   IConnected_PromoCode,
   IConnected_RoomType_AvailabilityResponse,
-  IConnected_WebHookDefinition
+  IConnected_WebHookDefinition,
+  IConnected_SubscriptionDefinition,
+  IConnected_SubscriptionBody,
+  IConnected_SUBSCRIPTION_EVENTS
 } from './models';
 
 import { IConnected_DateRange } from './shared.models'
@@ -175,13 +178,26 @@ export interface IBaseAdapter {
   // Availability 
   getAvaialability(hotel_id: ID, dateRange: IConnected_DateRange): Promise<IConnected_RoomType_AvailabilityResponse>
 
-
-  //TODO: Web hooks related methods (create, update, delete, list, webhooks)
+  // Web hooks related methods (create, update, delete, list, webhooks)
 
   webhooksList(): Promise<IConnected_WebHookDefinition[]> | IConnected_WebHookDefinition[]
   webhooksGetById(id: ID): Promise<IConnected_WebHookDefinition> | IConnected_WebHookDefinition
   webhooksCreate(webhookDefinition: IConnected_WebHookDefinition): Promise<ID> | ID
   webhooksUpdate(id: ID, webhookDefinition: IConnected_WebHookDefinition): Promise<ID> | ID
   webhooksDelete(webHookId: ID): Promise<ID> | ID
+
+
+  // ARI Subscriptions
+
+  getARISubscriptions(): Promise<IConnected_SubscriptionDefinition[]>
+  getARISubscriptionById(id: ID): Promise<IConnected_SubscriptionDefinition>
+  createARISubscription(data: IConnected_SubscriptionBody): Promise<ID>
+  updateARISubscription(id: ID, data: IConnected_SubscriptionBody): Promise<ID>
+  deleteARISubscription(id: ID): Promise<ID>
+  triggerARISubscriptionEvent(id: ID, event: IConnected_SUBSCRIPTION_EVENTS): Promise<ID>
+
+
+  //TODO: Booking Apis
+
 
 }
