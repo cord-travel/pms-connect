@@ -1,4 +1,5 @@
 export * from './webhooks.model'
+export * from './subscription.models'
 import {
   ILocationAddress,
   IMultiLanguageObject,
