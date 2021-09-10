@@ -176,7 +176,7 @@ export interface IBaseAdapter {
 
 
   // Availability 
-  getAvaialability(hotel_id: ID, dateRange: IConnected_DateRange): Promise<IConnected_RoomType_AvailabilityResponse>
+  getAvaialability?(hotel_id: ID, dateRange: IConnected_DateRange): Promise<IConnected_RoomType_AvailabilityResponse>
 
   // Web hooks related methods (create, update, delete, list, webhooks)
 
