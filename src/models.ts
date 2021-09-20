@@ -31,6 +31,7 @@ export interface IConnected_Hotel {
   id: ID;
   name: IMultiLanguageObject;
   description: IMultiLanguageObject;
+  no_of_rooms?: number
   company_name?: string;
   timezone?: string; // Location timezone
   location?: ILocationAddress;
