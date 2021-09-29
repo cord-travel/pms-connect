@@ -1,5 +1,6 @@
 export interface ILocationAddress {
-  address: string;
+  address_line_1: string;
+  address_line_2?: string;
   postal_code?: string;
   city?: string;
   country_code: string;

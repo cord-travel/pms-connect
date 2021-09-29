@@ -89,6 +89,13 @@ This methods are implemented in adapters. all methods return Promise<Model>
 | getServices    | Get list of services | hotelId<ID> | IConnected_ListOf<IConnected_Service> |
 | getServiceById | Get service by id    | id<ID>      | IConnected_Service                    |
 
+#### TimeSlice Definition
+
+| Method         | Description          | Params      | Return                                |
+| -------------- | -------------------- | ----------- | ------------------------------------- |
+| getTimeSliceDefinitions    | Get list of TimeSlice Definition | hotelId<ID> | IConnected_ListOf<IConnected_TimeSliceDefinition> |
+| getTimeSliceDefinitionDetail | Get TimeSlice Definition Details    | hotel_id<ID>, id<ID>      | IConnected_TimeSliceDefinition                    |
+
 #### Promo codes
 
 | Method        | Description             | Params | Return                                  |

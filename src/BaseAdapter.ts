@@ -2,6 +2,7 @@ import {
   ID,
   IConnected_ListOf,
   IConnected_Account,
+  IConnected_Language,
   IConnected_Hotel,
   IConnected_RoomType,
   IConnected_RatePlan,
@@ -11,6 +12,7 @@ import {
   IConnected_NoShowPolicy,
   IConnected_AgeCategory,
   IConnected_Service,
+  IConnected_TimeSliceDefinition,
   IConnected_PromoCode,
   IConnected_RoomType_AvailabilityResponse,
   IConnected_WebHookDefinition,
@@ -19,10 +21,10 @@ import {
   IConnected_SUBSCRIPTION_EVENTS
 } from './models';
 
-import { IConnected_DateRange } from './shared.models'
+import { IConnected_DateRange } from './shared.models';
 
 export interface IBaseAdapter {
-  name: string
+  name: string;
   getAuthorizeUrl?(params?: any): string;
 
   /**
@@ -30,6 +32,8 @@ export interface IBaseAdapter {
    * @param params
    */
   getAccount?(params?: any): Promise<IConnected_Account>;
+
+  getLanguages(params?: any): Promise<IConnected_Language[]>;
 
   /**
    * Get list of hotels
@@ -163,6 +167,19 @@ export interface IBaseAdapter {
 
   getServiceById(serviceId: ID, params?: any): Promise<IConnected_Service>;
 
+  // TimeSlice Definition
+
+  getTimeSliceDefinitions(
+    hotelId: ID,
+    params?: any
+  ): Promise<IConnected_ListOf<IConnected_TimeSliceDefinition>>;
+
+  getTimeSliceDefinitionDetail(
+    hotel_id: ID,
+    id: ID,
+    params?: any
+  ): Promise<IConnected_TimeSliceDefinition>;
+
   // Promo Codes
   /**
    * List promo codes
@@ -174,30 +191,40 @@ export interface IBaseAdapter {
     params?: any
   ): Promise<IConnected_ListOf<IConnected_PromoCode>>;
 
-
-  // Availability 
-  getAvaialability?(hotel_id: ID, dateRange: IConnected_DateRange): Promise<IConnected_RoomType_AvailabilityResponse>
+  // Availability @deprecated
+  getAvaialability?(
+    hotel_id: ID,
+    dateRange: IConnected_DateRange
+  ): Promise<IConnected_RoomType_AvailabilityResponse>;
 
   // Web hooks related methods (create, update, delete, list, webhooks)
 
-  webhooksList(): Promise<IConnected_WebHookDefinition[]> | IConnected_WebHookDefinition[]
-  webhooksGetById(id: ID): Promise<IConnected_WebHookDefinition> | IConnected_WebHookDefinition
-  webhooksCreate(webhookDefinition: IConnected_WebHookDefinition): Promise<ID> | ID
-  webhooksUpdate(id: ID, webhookDefinition: IConnected_WebHookDefinition): Promise<ID> | ID
-  webhooksDelete(webHookId: ID): Promise<ID> | ID
-
+  webhooksList():
+    | Promise<IConnected_WebHookDefinition[]>
+    | IConnected_WebHookDefinition[];
+  webhooksGetById(
+    id: ID
+  ): Promise<IConnected_WebHookDefinition> | IConnected_WebHookDefinition;
+  webhooksCreate(
+    webhookDefinition: IConnected_WebHookDefinition
+  ): Promise<ID> | ID;
+  webhooksUpdate(
+    id: ID,
+    webhookDefinition: IConnected_WebHookDefinition
+  ): Promise<ID> | ID;
+  webhooksDelete(webHookId: ID): Promise<ID> | ID;
 
   // ARI Subscriptions
 
-  getARISubscriptions(): Promise<IConnected_SubscriptionDefinition[]>
-  getARISubscriptionById(id: ID): Promise<IConnected_SubscriptionDefinition>
-  createARISubscription(data: IConnected_SubscriptionBody): Promise<ID>
-  updateARISubscription(id: ID, data: IConnected_SubscriptionBody): Promise<ID>
-  deleteARISubscription(id: ID): Promise<ID>
-  triggerARISubscriptionEvent(id: ID, event: IConnected_SUBSCRIPTION_EVENTS): Promise<ID>
-
+  getARISubscriptions(): Promise<IConnected_SubscriptionDefinition[]>;
+  getARISubscriptionById(id: ID): Promise<IConnected_SubscriptionDefinition>;
+  createARISubscription(data: IConnected_SubscriptionBody): Promise<ID>;
+  updateARISubscription(id: ID, data: IConnected_SubscriptionBody): Promise<ID>;
+  deleteARISubscription(id: ID): Promise<ID>;
+  triggerARISubscriptionEvent(
+    id: ID,
+    event: IConnected_SUBSCRIPTION_EVENTS
+  ): Promise<ID>;
 
   //TODO: Booking Apis
-
-
 }
