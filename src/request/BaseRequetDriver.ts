@@ -37,7 +37,7 @@ export abstract class BaseRequestDriver implements IBaseRequestDriver {
     this.refreshToken = options.refreshToken;
     this.baseUrl = options.baseUrl || '/';
   }
-  abstract generteAccessToken(): any
+  abstract generteAccessToken(): any;
 
   setTokenStore(_tokenStore: IBaseTokenStore) {
     this.tokenStore = _tokenStore;

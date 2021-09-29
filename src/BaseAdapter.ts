@@ -12,6 +12,7 @@ import {
   IConnected_NoShowPolicy,
   IConnected_AgeCategory,
   IConnected_Service,
+  IConnected_TimeSliceDefinition,
   IConnected_PromoCode,
   IConnected_RoomType_AvailabilityResponse,
   IConnected_WebHookDefinition,
@@ -166,6 +167,19 @@ export interface IBaseAdapter {
 
   getServiceById(serviceId: ID, params?: any): Promise<IConnected_Service>;
 
+  // TimeSlice Definition
+
+  getTimeSliceDefinitions(
+    hotelId: ID,
+    params?: any
+  ): Promise<IConnected_ListOf<IConnected_TimeSliceDefinition>>;
+
+  getTimeSliceDefinitionDetail(
+    hotel_id: ID,
+    id: ID,
+    params?: any
+  ): Promise<IConnected_TimeSliceDefinition>;
+
   // Promo Codes
   /**
    * List promo codes
@@ -177,7 +191,7 @@ export interface IBaseAdapter {
     params?: any
   ): Promise<IConnected_ListOf<IConnected_PromoCode>>;
 
-  // Availability
+  // Availability @deprecated
   getAvaialability?(
     hotel_id: ID,
     dateRange: IConnected_DateRange

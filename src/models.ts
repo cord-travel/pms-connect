@@ -36,7 +36,7 @@ export interface IConnected_Hotel {
   id: ID;
   name: IMultiLanguageObject;
   description: IMultiLanguageObject;
-  no_of_rooms?: number
+  no_of_rooms?: number;
   company_name?: string;
   timezone?: string; // Location timezone
   location?: ILocationAddress;
@@ -76,9 +76,11 @@ export interface IConnected_EmbededCancelationPolicy
   extends IConnected_Policy {}
 
 export interface IConnected_TimeSliceDefinition {
-  id: string;
-  name: string;
-  description: string;
+  id: ID;
+  code: ID;
+  name: IMultiLanguageObject;
+  description: IMultiLanguageObject;
+  template_id?: string;
   check_in_time: string;
   check_out_time: string;
 }
