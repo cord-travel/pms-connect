@@ -79,7 +79,6 @@ export interface IConnected_TimeSliceDefinition {
   id: ID;
   code: ID;
   name: IMultiLanguageObject;
-  description: IMultiLanguageObject;
   template_id?: string;
   check_in_time: string;
   check_out_time: string;
