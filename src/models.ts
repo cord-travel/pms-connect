@@ -1,12 +1,14 @@
 export * from './webhooks.model';
 export * from './subscription.models';
+export * from './shared.models';
 import {
   ILocationAddress,
   IMultiLanguageObject,
   ISurchargeModel,
   IConnected_MonetaryValue,
   IConnected_DateRange,
-  IConnected_Period
+  IConnected_Period,
+  AMOUNT_VALUE_TYPE
 } from './shared.models';
 export type ID = string | number;
 export interface BasicObject {
@@ -59,6 +61,12 @@ export interface IConnected_RoomType {
   images?: string[];
 }
 
+export interface IConnected_RoomTypeEmbeded {
+  id: ID;
+  hotel_id?: ID;
+  code?: ID;
+}
+
 export interface IConnected_Room {
   id: ID;
   code: ID;
@@ -91,8 +99,8 @@ export interface IConnected_BookingRestrictionsModel {
 }
 
 export interface IConnected_PricingRuleModel {
-  baseRatePlan?: IConnected_RatePlan;
-  type: string;
+  baseRatePlan: IConnected_RatePlan;
+  type: AMOUNT_VALUE_TYPE;
   value: number;
 }
 
@@ -126,10 +134,11 @@ export interface IConnected_RatePlan {
   name: IMultiLanguageObject;
   description: IMultiLanguageObject;
   channel_codes: string[];
-  minimum_guarantee_type: string[];
-  price_calculation_mode?: string[];
+  room_type: IConnected_RoomTypeEmbeded;
+  minimum_guarantee_type: string;
+  price_calculation_mode?: string;
   booking_periods?: IConnected_DateRange[];
-  rates_range?: IConnected_DateRange;
+  rates_range: IConnected_DateRange;
   promo_codes?: string[];
   is_bookable?: boolean;
   is_subject_to_city_tax?: boolean;
