@@ -6,6 +6,11 @@ export interface ILocationAddress {
   country_code: string;
 }
 
+export enum AMOUNT_VALUE_TYPE {
+  Absolute = 'Absolute',
+  Percent = 'Percent'
+}
+
 export interface IMultiLanguageObject {
   en: string; // English
   de?: string; // german
@@ -18,7 +23,7 @@ export interface IMultiLanguageObject {
 
 export interface ISurchargeModel {
   adults: number; //The total numbers of adults
-  type?: string; // ENUM: Absolute, Percent
+  type: AMOUNT_VALUE_TYPE; // ENUM: Absolute, Percent
   value: number;
 }
 
