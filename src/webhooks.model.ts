@@ -20,6 +20,7 @@ export enum ICONNECTED_WEBHOOK_ENTITY {
   folio = 'folio',
   invoice = 'invoice',
   'rate-plan' = 'rate-plan',
+  'rate' = 'rate',
   'maintenance' = 'Maintenance',
   'system' = 'system'
 }

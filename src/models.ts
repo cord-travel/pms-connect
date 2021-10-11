@@ -1,6 +1,7 @@
 export * from './webhooks.model';
 export * from './subscription.models';
 export * from './shared.models';
+export * from './aridata.models';
 import {
   ILocationAddress,
   IMultiLanguageObject,
