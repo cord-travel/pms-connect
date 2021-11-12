@@ -1,6 +1,6 @@
 {
   "name": "@cord-travel/pms-connect",
-  "version": "1.0.2-beta.7.1",
+  "version": "1.0.2-beta.8",
   "description": "",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

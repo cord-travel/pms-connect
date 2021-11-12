@@ -2,6 +2,7 @@ export * from './webhooks.model';
 export * from './subscription.models';
 export * from './shared.models';
 export * from './aridata.models';
+export * from './booking'
 import {
   ILocationAddress,
   IMultiLanguageObject,
@@ -82,7 +83,7 @@ export interface IConnected_Policy {
   description: IMultiLanguageObject;
 }
 export interface IConnected_EmbededCancelationPolicy
-  extends IConnected_Policy {}
+  extends IConnected_Policy { }
 
 export interface IConnected_TimeSliceDefinition {
   id: ID;

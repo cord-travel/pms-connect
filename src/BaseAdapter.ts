@@ -18,7 +18,9 @@ import {
   IConnected_WebHookDefinition,
   IConnected_SubscriptionDefinition,
   IConnected_SubscriptionBody,
-  IConnected_SUBSCRIPTION_EVENTS
+  IConnected_SUBSCRIPTION_EVENTS,
+  IConnected_CreateBookPayload,
+  IConnected_BookingResponse
 } from './models';
 
 import { IConnected_DateRange } from './shared.models';
@@ -227,4 +229,7 @@ export interface IBaseAdapter {
   ): Promise<ID>;
 
   //TODO: Booking Apis
+
+  bookReservations(hotelId: ID, payload: IConnected_CreateBookPayload): Promise<IConnected_BookingResponse>
+
 }
